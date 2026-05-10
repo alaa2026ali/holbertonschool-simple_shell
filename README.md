@@ -68,4 +68,5 @@ hsh main.c shell.c
 ---
 
 ## Authors
-* **Alaa Aldwasari** - [GitHub](https://github.com)
+* **Alaa Aldwasari**
+* **Alqhtani Hadeel**
