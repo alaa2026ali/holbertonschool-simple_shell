@@ -1,0 +1,58 @@
+.TH hsh 1 "MAY 10, 2026" "1.0" "hsh (simple_shell) Man Page"
+
+.SH NAME
+.B simple_shell \- hsh
+\- custom command line interpreter or shell
+
+.SH SYNOPSIS
+.B ./hsh
+.I (No options included as of this writing)
+
+.SH DESCRIPTION
+.B simple_shell
+is a custom implementation of a simple UNIX shell. A minimalistic approach was taken in its design and implementation to provide the basic functions of a shell similar to the one designed by Ken Thompson. Design, compilation, and testing were conducted on Ubuntu 20.04 LTS.
+
+.SH OVERVIEW
+Similar to other command line interfaces, the simple_shell takes input from either the terminal or scripts and executes them as they appear. 
+
+.SH INVOCATION
+The GNU Compiler Collection,
+.B gcc
+, is recommended for compiling simple_shell with the following flags:
+.P
+.RS
+.B $ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+.P
+.RE
+In **interactive mode**, the simple_shell displays a prompt ('$') and waits for user input. Commands are executed after pressing the Enter key.
+.P
+.RS
+.B $ ./hsh
+.br
+($) /bin/ls
+.P
+.RE
+In **non-interactive mode**, users can pipe commands or scripts into the shell.
+.P
+.RS
+.B echo "/bin/ls" | ./hsh
+.RE
+
+.SH BUILTINS
+The following builtin commands are supported:
+.TP
+.B env
+Prints all current environment variables.
+.TP
+.B exit
+Exits the program and returns to the parent shell.
+
+.SH BUGS
+No known bugs have been found or reported as of May 10, 2026.
+Please report any issues to the author listed in the AUTHOR section.
+
+.SH AUTHOR
+Alaa Aldwasari <alaa.aldwasari@holbertonstudents.com>
+
+.SH SEE ALSO
+sh(1), bash(1), execve(2), fork(2), wait(2), stat(2)
