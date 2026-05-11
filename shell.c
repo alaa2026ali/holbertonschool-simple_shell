@@ -1,32 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <string.h>
-
-extern char **environ;
+#include "main.h"
 
 /**
- * main - simple UNIX command interpreter
+ * main - Simple UNIX command line interpreter
  *
- * Return: Always 0
+ * Description: Displays a prompt, reads user input,
+ * and executes commands using a child process.
+ *
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	pid_t child_pid;
-	int status;
-	char *argv[2];
 
 	while (1)
 	{
+		/* Display prompt only in interactive mode */
 		if (isatty(STDIN_FILENO))
 			printf("#cisfun$ ");
 
+		/* Read input from user */
 		nread = getline(&line, &len, stdin);
+
+		/* Handle EOF (Ctrl+D) */
 		if (nread == -1)
 		{
 			if (isatty(STDIN_FILENO))
@@ -34,36 +31,13 @@ int main(void)
 			break;
 		}
 
-		/* remove newline */
+		/* Remove newline character */
 		if (line[nread - 1] == '\n')
 			line[nread - 1] = '\0';
 
-		/* ignore empty input */
-		if (line[0] == '\0')
-			continue;
-
-		child_pid = fork();
-		if (child_pid == -1)
-		{
-			perror("Error");
-			continue;
-		}
-
-		if (child_pid == 0)
-		{
-			argv[0] = line;
-			argv[1] = NULL;
-
-			if (execve(argv[0], argv, environ) == -1)
-			{
-				perror("./hsh");
-				exit(1);
-			}
-		}
-		else
-		{
-			wait(&status);
-		}
+		/* Ignore empty lines */
+		if (line[0] != '\0')
+			execute_cmd(line);
 	}
 
 	free(line);
