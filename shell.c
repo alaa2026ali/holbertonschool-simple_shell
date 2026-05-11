@@ -3,10 +3,10 @@
 /**
  * main - Simple UNIX command line interpreter
  *
- * Description: Displays a prompt, reads user input,
- * and executes commands using a child process.
+ * Description: Displays prompt, reads input,
+ * and executes commands using fork + execve.
  *
- * Return: Always 0 (Success)
+ * Return: Always 0
  */
 int main(void)
 {
@@ -16,14 +16,12 @@ int main(void)
 
 	while (1)
 	{
-		/* Display prompt only in interactive mode */
 		if (isatty(STDIN_FILENO))
 			printf("#cisfun$ ");
 
-		/* Read input from user */
 		nread = getline(&line, &len, stdin);
 
-		/* Handle EOF (Ctrl+D) */
+		/* Handle EOF */
 		if (nread == -1)
 		{
 			if (isatty(STDIN_FILENO))
@@ -31,11 +29,10 @@ int main(void)
 			break;
 		}
 
-		/* Remove newline character */
-		if (line[nread - 1] == '\n')
-			line[nread - 1] = '\0';
+		/* FIX: safe newline removal */
+		line[strcspn(line, "\n")] = '\0';
 
-		/* Ignore empty lines */
+		/* Ignore empty input */
 		if (line[0] != '\0')
 			execute_cmd(line);
 	}
