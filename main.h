@@ -1,12 +1,12 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/* Standard libraries */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <string.h>
 
 /* Access to environment variables */
 extern char **environ;
