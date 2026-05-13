@@ -2,10 +2,7 @@
 
 /**
  * execute_cmd - Executes a command using fork and execve
- * @command: Full path of command
- *
- * Description: Creates child process and executes command.
- * Parent waits for child.
+ * @command: command to execute
  */
 void execute_cmd(char *command)
 {
@@ -17,7 +14,6 @@ void execute_cmd(char *command)
 
 	if (pid == -1)
 	{
-		perror("Error");
 		return;
 	}
 
@@ -26,14 +22,10 @@ void execute_cmd(char *command)
 		argv[0] = command;
 		argv[1] = NULL;
 
+		/* Try executing command */
 		if (execve(argv[0], argv, environ) == -1)
-		{
-			perror("./hsh");
 			exit(1);
-		}
 	}
 	else
-	{
 		wait(&status);
-	}
 }
