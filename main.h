@@ -12,6 +12,7 @@
 extern char **environ;
 
 /* Function prototype */
-void execute_cmd(char *command);
+/* void execute_cmd(char *command); */
+void execute_cmd(char **argv);
 
 #endif /* MAIN_H */
