@@ -1,30 +1,19 @@
 #include "main.h"
 
 /**
- * execute_cmd - Tokenizes a string into arguments and executes the binary
- * @command: Raw input string containing the command line
+ * execute_cmd - Executes a command using argv
+ * @argv: arguments array
  */
-void execute_cmd(char *command)
+void execute_cmd(char **argv)
 {
 	pid_t pid;
 	int status;
-	char *argv[32];
-	char *token;
-	int i = 0;
-
-	token = strtok(command, " \t\r\n\a");
-	while (token != NULL && i < 31)
-	{
-		argv[i] = token;
-		i++;
-		token = strtok(NULL, " \t\r\n\a");
-	}
-	argv[i] = NULL;
 
 	if (argv[0] == NULL)
 		return;
 
 	pid = fork();
+
 	if (pid == -1)
 		return;
 
