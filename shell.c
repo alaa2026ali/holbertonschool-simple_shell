@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * main - Simple shell entry point
+ * main - Simple UNIX command line interpreter
  *
  * Return: Always 0
  */
@@ -10,9 +10,7 @@ int main(void)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	char *token;
-	char *argv[1024];
-	int i;
+	char *start;
 
 	while (1)
 	{
@@ -20,6 +18,7 @@ int main(void)
 			printf("#cisfun$ ");
 
 		nread = getline(&line, &len, stdin);
+
 		if (nread == -1)
 		{
 			if (isatty(STDIN_FILENO))
@@ -27,24 +26,14 @@ int main(void)
 			break;
 		}
 
-		if (line[nread - 1] == '\n')
-			line[nread - 1] = '\0';
+		line[strcspn(line, "\n")] = '\0';
 
-		i = 0;
-		token = strtok(line, " ");
+		start = line;
+		while (*start == ' ' || *start == '\t')
+			start++;
 
-		while (token != NULL)
-		{
-			argv[i] = token;
-			i++;
-			token = strtok(NULL, " ");
-		}
-		argv[i] = NULL;
-
-		if (argv[0] != NULL)
-		{
-			execute_cmd(argv);
-		}
+		if (*start != '\0')
+			execute_cmd(start);
 	}
 
 	free(line);
