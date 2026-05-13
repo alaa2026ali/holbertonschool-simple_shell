@@ -1,8 +1,8 @@
 #include "main.h"
 
 /**
- * execute_cmd - Executes a command using argv
- * @argv: arguments array
+ * execute_cmd - Executes command using argv
+ * @argv: array of arguments
  */
 void execute_cmd(char **argv)
 {
@@ -15,7 +15,10 @@ void execute_cmd(char **argv)
 	pid = fork();
 
 	if (pid == -1)
+	{
+		perror("Error");
 		return;
+	}
 
 	if (pid == 0)
 	{
