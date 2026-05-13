@@ -1,16 +1,19 @@
 #include "main.h"
+#include <string.h>
 
 /**
- * main - Simple UNIX command line interpreter
+ * main - simple shell entry point
  *
- * Return: Always 0
+ * Return: 0
  */
 int main(void)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	char *start;
+	char *token;
+	char *argv[1024];
+	int i;
 
 	while (1)
 	{
@@ -18,8 +21,6 @@ int main(void)
 			printf("#cisfun$ ");
 
 		nread = getline(&line, &len, stdin);
-
-		/* Handle EOF (Ctrl+D) or end of pipe stream */
 		if (nread == -1)
 		{
 			if (isatty(STDIN_FILENO))
@@ -27,17 +28,22 @@ int main(void)
 			break;
 		}
 
-		/* Cleanly remove trailing newline character */
-		line[strcspn(line, "\n")] = '\0';
+		if (line[nread - 1] == '\n')
+			line[nread - 1] = '\0';
 
-		/* Advance pointer past any leading whitespace */
-		start = line;
-		while (*start == ' ' || *start == '\t')
-			start++;
+		i = 0;
+		token = strtok(line, " ");
 
-		/* Execute only if the evaluated string contains text */
-		if (*start != '\0')
-			execute_cmd(start);
+		while (token != NULL)
+		{
+			argv[i] = token;
+			i++;
+			token = strtok(NULL, " ");
+		}
+		argv[i] = NULL;
+
+		if (argv[0] != NULL)
+			execute_cmd(argv);
 	}
 
 	free(line);
