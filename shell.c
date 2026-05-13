@@ -1,10 +1,9 @@
 #include "main.h"
-#include <string.h>
 
 /**
- * main - simple shell entry point
+ * main - Simple shell entry point
  *
- * Return: 0
+ * Return: Always 0
  */
 int main(void)
 {
@@ -43,7 +42,10 @@ int main(void)
 		argv[i] = NULL;
 
 		if (argv[0] != NULL)
+		{
+			execute_cmd(argv);
 		}
+	}
 
 	free(line);
 	return (0);
