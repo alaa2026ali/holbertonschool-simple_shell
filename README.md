@@ -64,6 +64,9 @@ hsh main.c shell.c
 
 ---
 ## Logic Flow
+The shell follows a continuous loop to handle user commands efficiently:
+
+```mermaid
 graph TD
     A[Start Shell] --> B[Display Prompt $]
     B --> C[Read Command Line]
