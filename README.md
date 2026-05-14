@@ -54,6 +54,13 @@ hsh main.c shell.c
 ```
 
 ---
+Logic Flow
+We followed a simple logic to make this shell run correctly:
+1. **Wait for Input:** The shell stays active and shows the `($)` prompt, waiting for you to type something.
+2. **Reading & Splitting:** Once you hit Enter, the shell reads your line and breaks it into separate words (tokens) so it can understand the command and its arguments.
+3. **Creating a Process:** Because we don't want the main shell to close after one command, we use `fork` to create a "child process" that handles the execution.
+4. **Running the Command:** The child process uses `execve` to look for the command and run it.
+5. **Cleaning Up:** After the command finishes, the shell cleans up any allocated memory to prevent leaks and goes back to step 1.
 
 ## File Description
 
@@ -69,4 +76,4 @@ hsh main.c shell.c
 
 ## Authors
 - **Alaa AlDwasari** (GitHub: https://github.com/alaa2026ali)
-- **Alqhtani Hadeel**(حطي هنا القيت حقك)
+- **Alqhtani Hadeel**(GitHub: https://github.com/ixhadeel)
