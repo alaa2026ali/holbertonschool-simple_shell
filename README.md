@@ -63,7 +63,7 @@ hsh main.c shell.c
 ```
 
 ---
-## Logic Flow
+## Logic Flowchart
 The shell follows a continuous loop to handle user commands efficiently:
 
 ```mermaid
