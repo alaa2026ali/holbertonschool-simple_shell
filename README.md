@@ -63,20 +63,14 @@ hsh main.c shell.c
 ```
 
 ---
-## Logic Flowchart
-The shell follows a continuous loop to handle user commands efficiently:
+## Logic Flow
+We followed a simple logic to make this shell run correctly:
 
-```mermaid
-graph TD
-    A[Start Shell] --> B[Display Prompt $]
-    B --> C[Read Command Line]
-    C --> D[Parse Input into Tokens]
-    D --> E{Is Built-in?}
-    E -- Yes --> F[Execute Built-in]
-    E -- No --> G[Fork Process]
-    G --> H[Child: Execve Command]
-    H --> I[Parent: Wait for Child]
-    I --> B
+1. **Wait for Input:** The shell stays active and shows the `($)` prompt, waiting for you to type something.
+2. **Reading & Splitting:** Once you hit Enter, the shell reads your line and breaks it into separate words (tokens) so it can understand the command and its arguments.
+3. **Creating a Process:** Because we don't want the main shell to close after one command, we use `fork` to create a "child process" that handles the execution.
+4. **Running the Command:** The child process uses `execve` to look for the command and run it.
+5. **Cleaning Up:** After the command finishes, the shell cleans up any allocated memory to prevent leaks and goes back to step 1.
 ---
 
 ## File Description
