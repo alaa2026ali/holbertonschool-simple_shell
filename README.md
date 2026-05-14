@@ -24,9 +24,9 @@ This project is part of the **ALX / Holberton School** curriculum for the Low-le
 - **Coding Style:** All files must follow the **Betty style**.
 - **Memory:** No memory leaks (Checked with `valgrind`).
 - **Organization:** Maximum 5 functions per file.
-																---
-## Learning objectives
-```markdown
+															
+---
+
 ## Learning Objectives
 At the end of this project, we are expected to be able to explain:
 * How a shell works and its basic architecture.
@@ -64,7 +64,6 @@ hsh main.c shell.c
 
 ---
 ## Logic Flow
-```mermaid
 graph TD
     A[Start Shell] --> B[Display Prompt $]
     B --> C[Read Command Line]
