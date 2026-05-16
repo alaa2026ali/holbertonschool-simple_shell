@@ -12,17 +12,14 @@ void execute_cmd(char **argv)
 
 	if (argv == NULL || argv[0] == NULL)
 		return;
+
 	actual_command = find_path(argv[0]);
 	if (actual_command == NULL)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-		if (!isatty(STDIN_FILENO))
-		{
-			free(argv);
-			exit(127);
-		}
 		return;
 	}
+
 	pid = fork();
 	if (pid == -1)
 	{
@@ -30,6 +27,7 @@ void execute_cmd(char **argv)
 		free(actual_command);
 		return;
 	}
+
 	if (pid == 0)
 	{
 		if (execve(actual_command, argv, environ) == -1)
@@ -40,7 +38,9 @@ void execute_cmd(char **argv)
 		}
 	}
 	else
+	{
 		wait(&status);
+	}
+
 	free(actual_command);
 }
-
