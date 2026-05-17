@@ -21,6 +21,26 @@ void parse_line(char *line, char **argv)
 }
 
 /**
+ * check_builtin - Checks if a command is a built-in function
+ * @argv: Array of arguments
+ * @line: The input line pointer for memory freeing
+ *
+ * Return: 1 if built-in was found and handled, 0 otherwise
+ */
+int check_builtin(char **argv, char *line)
+{
+	if (argv[0] == NULL)
+		return (0);
+
+	if (strcmp(argv[0], "exit") == 0)
+	{
+		free(line);
+		exit(0);
+	}
+	return (0);
+}
+
+/**
  * process_command - Checks and executes the command
  * @argv: Array of arguments
  * @line: The input line pointer for memory freeing
@@ -30,6 +50,9 @@ void process_command(char **argv, char *line)
 	char *check_path;
 
 	if (argv[0] == NULL)
+		return;
+
+	if (check_builtin(argv, line))
 		return;
 
 	check_path = find_path(argv[0]);

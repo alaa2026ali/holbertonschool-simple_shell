@@ -15,5 +15,6 @@ void parse_line(char *line, char **argv);
 void execute_cmd(char **argv);
 char *_getenv(const char *name);
 char *find_path(char *command);
+int check_builtin(char **argv, char *line);
 
 #endif /* MAIN_H */
