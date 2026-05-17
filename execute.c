@@ -1,8 +1,8 @@
 #include "main.h"
 
 /**
- * execute_cmd - Executes command using argv
- * @argv: array of arguments
+ * execute_cmd - Executes a command using a child process
+ * @argv: Array of arguments
  */
 void execute_cmd(char **argv)
 {
@@ -17,6 +17,8 @@ void execute_cmd(char **argv)
 	if (actual_command == NULL)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+		if (!isatty(STDIN_FILENO))
+			exit(127);
 		return;
 	}
 

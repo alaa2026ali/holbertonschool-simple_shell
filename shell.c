@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * parse_line - Splits a line into arguments
- * @line: The line to split
- * @argv: The array to store arguments
+ * parse_line - Splits a line into arguments tokens
+ * @line: The input line string
+ * @argv: The array to store argument tokens
  */
 void parse_line(char *line, char **argv)
 {
@@ -21,7 +21,7 @@ void parse_line(char *line, char **argv)
 }
 
 /**
- * main - Simple shell entry point
+ * main - Entry point for the simple shell
  *
  * Return: Always 0
  */
@@ -52,17 +52,7 @@ int main(void)
 
 		if (argv[0] != NULL)
 		{
-			if (find_path(argv[0]) == NULL)
-			{
-				fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-				if (!isatty(STDIN_FILENO))
-				{
-					free(line);
-					exit(127);
-				}
-			}
-			else
-				execute_cmd(argv);
+			execute_cmd(argv);
 		}
 	}
 	free(line);

@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * _getenv - get environment variable value
- * @name: variable name
+ * _getenv - Gets the value of an environment variable
+ * @name: Name of the variable
  *
- * Return: pointer to value, or NULL
+ * Return: Pointer to the value, or NULL if not found
  */
 char *_getenv(const char *name)
 {
@@ -23,11 +23,11 @@ char *_getenv(const char *name)
 }
 
 /**
- * build_path - join directory and command
- * @dir: directory path
- * @cmd: command name
+ * build_path - Concatenates a directory path and a command
+ * @dir: Directory path
+ * @cmd: Command name
  *
- * Return: full path string, or NULL
+ * Return: Full path string, or NULL on failure
  */
 char *build_path(char *dir, char *cmd)
 {
@@ -44,10 +44,10 @@ char *build_path(char *dir, char *cmd)
 }
 
 /**
- * find_path - look for command in PATH directories
- * @command: command to find
+ * find_path - Locates a command in the PATH directories
+ * @command: The command to locate
  *
- * Return: full path of command, or NULL
+ * Return: Full path of the command if found, or NULL
  */
 char *find_path(char *command)
 {
@@ -56,14 +56,22 @@ char *find_path(char *command)
 
 	if (command == NULL)
 		return (NULL);
-	if (stat(command, &st) == 0)
-		return (strdup(command));
+
+	if (strchr(command, '/') != NULL)
+	{
+		if (stat(command, &st) == 0)
+			return (strdup(command));
+		return (NULL);
+	}
+
 	path = _getenv("PATH");
 	if (path == NULL || strlen(path) == 0)
 		return (NULL);
+
 	path_copy = strdup(path);
 	if (path_copy == NULL)
 		return (NULL);
+
 	token = strtok(path_copy, ":");
 	while (token != NULL)
 	{
