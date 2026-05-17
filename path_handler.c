@@ -59,7 +59,7 @@ char *find_path(char *command)
 	if (stat(command, &st) == 0)
 		return (strdup(command));
 	path = _getenv("PATH");
-	if (path == NULL)
+	if (path == NULL || strlen(path) == 0)
 		return (NULL);
 	path_copy = strdup(path);
 	if (path_copy == NULL)
