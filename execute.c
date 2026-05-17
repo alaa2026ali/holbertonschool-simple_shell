@@ -3,8 +3,9 @@
 /**
  * execute_cmd - Executes a command using a child process
  * @argv: Array of arguments
+ * @last_status: Pointer to the last command exit status
  */
-void execute_cmd(char **argv)
+void execute_cmd(char **argv, int *last_status)
 {
 	pid_t pid;
 	int status;
@@ -17,6 +18,7 @@ void execute_cmd(char **argv)
 	if (actual_command == NULL)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+		*last_status = 127;
 		return;
 	}
 
@@ -40,6 +42,8 @@ void execute_cmd(char **argv)
 	else
 	{
 		wait(&status);
+		if (WIFEXITED(status))
+			*last_status = WEXITSTATUS(status);
 	}
 
 	free(actual_command);

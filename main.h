@@ -12,9 +12,9 @@
 extern char **environ;
 
 void parse_line(char *line, char **argv);
-void execute_cmd(char **argv);
+void execute_cmd(char **argv, int *last_status);
 char *_getenv(const char *name);
 char *find_path(char *command);
-int check_builtin(char **argv, char *line);
+int check_builtin(char **argv, char *line, int *last_status);
 
 #endif /* MAIN_H */
