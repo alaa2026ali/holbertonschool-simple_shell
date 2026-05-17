@@ -30,6 +30,8 @@ void parse_line(char *line, char **argv)
  */
 int check_builtin(char **argv, char *line, int *last_status)
 {
+	int i;
+
 	if (argv[0] == NULL)
 		return (0);
 
@@ -40,6 +42,17 @@ int check_builtin(char **argv, char *line, int *last_status)
 		free(line);
 		exit(status);
 	}
+
+	if (strcmp(argv[0], "env") == 0)
+	{
+		for (i = 0; environ[i] != NULL; i++)
+		{
+			printf("%s\n", environ[i]);
+		}
+		*last_status = 0;
+		return (1);
+	}
+
 	return (0);
 }
 
