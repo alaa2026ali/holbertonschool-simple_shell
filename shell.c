@@ -21,6 +21,35 @@ void parse_line(char *line, char **argv)
 }
 
 /**
+ * process_command - Checks and executes the command
+ * @argv: Array of arguments
+ * @line: The input line pointer for memory freeing
+ */
+void process_command(char **argv, char *line)
+{
+	char *check_path;
+
+	if (argv[0] == NULL)
+		return;
+
+	check_path = find_path(argv[0]);
+	if (check_path == NULL)
+	{
+		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+		if (!isatty(STDIN_FILENO))
+		{
+			free(line);
+			exit(127);
+		}
+	}
+	else
+	{
+		free(check_path);
+		execute_cmd(argv);
+	}
+}
+
+/**
  * main - Entry point for the simple shell
  *
  * Return: Always 0
@@ -49,11 +78,7 @@ int main(void)
 			line[nread - 1] = '\0';
 
 		parse_line(line, argv);
-
-		if (argv[0] != NULL)
-		{
-			execute_cmd(argv);
-		}
+		process_command(argv, line);
 	}
 	free(line);
 	return (0);

@@ -17,8 +17,6 @@ void execute_cmd(char **argv)
 	if (actual_command == NULL)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-		if (!isatty(STDIN_FILENO))
-			exit(127);
 		return;
 	}
 
